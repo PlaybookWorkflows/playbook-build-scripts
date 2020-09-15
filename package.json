@@ -5,6 +5,10 @@
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://Kauyumari@bitbucket.org/Kauyumari/playbook-scripts.git"
+  },
   "dependencies": {
     "@babel/core": "7.10.5",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.1",
@@ -78,17 +82,24 @@
       "optional": true
     }
   },
-  "keywords": [],
-  "author": "",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "license": "ISC",
   "files": [
     "bin",
     "config",
     "lib",
-    "scripts",
-    "template",
-    "template-typescript",
-    "utils"
+    "scripts"
   ],
   "types": "./lib/react-app.d.ts"
 }
