@@ -327,17 +327,17 @@ module.exports = function (webpackEnv) {
         // It's important to do this before Babel processes the JS.
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
-          exclude: '/node_modules/',
           enforce: 'pre',
           use: [
             {
+              loader: require.resolve('eslint-loader'),
               options: {
                 cache: true,
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
-                resolvePluginsRelativeTo: __dirname
+                resolvePluginsRelativeTo: __dirname,
+                emitWarning: true
               },
-              loader: require.resolve('eslint-loader'),
             },
           ],
           include: paths.appSrc,
