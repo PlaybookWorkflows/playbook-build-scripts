@@ -32,7 +32,7 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
-
+const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 const isExtendingEslintConfig = process.env.EXTEND_ESLINT === 'true';
 
 const imageInlineSizeLimit = parseInt(
@@ -335,7 +335,7 @@ module.exports = function (webpackEnv) {
                 cache: true,
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
-                resolvePluginsRelativeTo: __dirname,
+                resolvePluginsRelativeTo: __dirname
               },
               loader: require.resolve('eslint-loader'),
             },
@@ -368,7 +368,25 @@ module.exports = function (webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides',
                 ),
-
+                babelrc: false,
+                configFile: false,
+                presets: [require.resolve('babel-preset-react-app')],
+                // Make sure we have a unique cache identifier, erring on the
+                // side of caution.
+                // We remove this when the user ejects because the default
+                // is sane and uses Babel options. Instead of options, we use
+                // the react-scripts and babel-preset-react-app versions.
+                cacheIdentifier: getCacheIdentifier(
+                  isEnvProduction
+                    ? 'production'
+                    : isEnvDevelopment && 'development',
+                  [
+                    'babel-plugin-named-asset-import',
+                    'babel-preset-react-app',
+                    'react-dev-utils',
+                    'react-scripts',
+                  ]
+                ),
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -410,7 +428,17 @@ module.exports = function (webpackEnv) {
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
-
+                cacheIdentifier: getCacheIdentifier(
+                  isEnvProduction
+                    ? 'production'
+                    : isEnvDevelopment && 'development',
+                  [
+                    'babel-plugin-named-asset-import',
+                    'babel-preset-react-app',
+                    'react-dev-utils',
+                    'react-scripts',
+                  ]
+                ),
                 // Babel sourcemaps are needed for debugging into node_modules
                 // code.  Without the options below, debuggers like VSCode
                 // show incorrect code and set breakpoints on the wrong lines.
