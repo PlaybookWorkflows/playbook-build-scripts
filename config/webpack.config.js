@@ -497,13 +497,12 @@ module.exports = function (webpackEnv) {
               exclude: lessModuleRegex,
               use: getStyleLoaders(
                 {
-                  importLoaders: 3,
+                  importLoaders: 4,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 'less-loader',
                 {
                   lessOptions: {
-                    rewriteUrls: 'all',
                     relativeUrls: true,
                     javascriptEnabled: true,
                   },
@@ -515,7 +514,7 @@ module.exports = function (webpackEnv) {
               test: lessModuleRegex,
               use: getStyleLoaders(
                 {
-                  importLoaders: 3,
+                  importLoaders: 4,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                 },
                 'less-loader',
