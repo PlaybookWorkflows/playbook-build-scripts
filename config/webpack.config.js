@@ -458,6 +458,37 @@ module.exports = function (webpackEnv) {
                 },
               }),
             },
+            // Opt-in support for Less (using .less extensions).
+            // By default we support Less Modules with the
+            // extensions .module.less
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                },
+                'less-loader',
+                {
+                  lessOptions: {
+                    relativeUrls: true,
+                    javascriptEnabled: true,
+                  },
+                },
+              ),
+              sideEffects: true,
+            },
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 3,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                },
+                'less-loader',
+              ),
+            },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass
@@ -490,34 +521,6 @@ module.exports = function (webpackEnv) {
                   },
                 },
                 'sass-loader',
-              ),
-            },
-            {
-              test: lessRegex,
-              exclude: lessModuleRegex,
-              use: getStyleLoaders(
-                {
-                  importLoaders: 4,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
-                },
-                'less-loader',
-                {
-                  lessOptions: {
-                    relativeUrls: true,
-                    javascriptEnabled: true,
-                  },
-                },
-              ),
-              sideEffects: true,
-            },
-            {
-              test: lessModuleRegex,
-              use: getStyleLoaders(
-                {
-                  importLoaders: 4,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
-                },
-                'less-loader',
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
